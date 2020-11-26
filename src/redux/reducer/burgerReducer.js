@@ -15,11 +15,18 @@ const reducer = (state = initialState, action) => {
     return {
       ingredients: {
         ...state.ingredients,
-        [action.nemehOrts]: state.ingredients[action.nemehOrts] + 1,
+        [action.ortsNer]: state.ingredients[action.ortsNer] + 1,
       },
-      totalPrice: state.totalPrice + INGREDIENT_PRICES[action.nemehOrts],
+      totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ortsNer],
     };
   } else if (action.type === "REMOVE_INGREDIENT") {
+    return {
+      ingredients: {
+        ...state.ingredients,
+        [action.ortsNer]: state.ingredients[action.ortsNer] - 1,
+      },
+      totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ortsNer],
+    };
   }
   return state;
 };
