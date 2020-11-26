@@ -1,14 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import BurgerIngredient from "../BurgerIngredient";
 import css from "./style.module.css";
 import { withRouter } from "react-router-dom";
 
 const Burger = (props) => {
-  //{bacon: 2, cheese: 2, meat: 1, salad: 1}
-  console.log(props.orts);
   const items = Object.entries(props.orts);
   // {bacon: 2, cheese: 2, meat: 1, salad: 1} -ийг нэг нэгээр нь массив болгож хувиргахын тулд "Object.entries" функцыг ашиглана. Тухайн функц руу object-ийг дамжуулхад, тухайн object-ийн аттрибютуудыг нэг массив болгоод гаргаж ирнэ.
-  console.log(items);
 
   let content = [];
   items.map((el) => {
@@ -32,4 +30,9 @@ const Burger = (props) => {
   );
 };
 
-export default Burger;
+const mapStateToProps = (state) => {
+  return {
+    orts: state.ingredients,
+  };
+};
+export default connect(mapStateToProps)(withRouter(Burger));

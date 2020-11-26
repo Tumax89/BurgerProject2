@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../General/Button";
+import { connect } from "react-redux";
 
 const OrderSummary = (props) => {
   return (
@@ -9,7 +10,7 @@ const OrderSummary = (props) => {
       <ul>
         {Object.keys(props.ingredients).map((el) => (
           <li key={el}>
-            {props.ingredientsNames[el]} : {props.ingredients[el]}
+            {props.ingredientNames[el]} : {props.ingredients[el]}
           </li>
         ))}
       </ul>
@@ -27,6 +28,14 @@ const OrderSummary = (props) => {
   );
 };
 
-export default OrderSummary;
+const mapStateToProps = (state) => {
+  return {
+    price: state.totalPrice,
+    ingredients: state.ingredients,
+    ingredientNames: state.ingredientNames,
+  };
+};
+
+export default connect(mapStateToProps)(OrderSummary);
 
 // Object.keys ашиглан object-ийн аттрибютүүдийг массив хэлбэрээр гаргаж авна.

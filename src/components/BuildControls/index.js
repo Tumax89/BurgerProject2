@@ -1,8 +1,16 @@
 import React from "react";
+import * as actions from "../../redux/actions/burgerActions";
 import BuildControl from "../BuildControl";
 import css from "./style.module.css";
+import { connect } from "react-redux";
 
 const BuildControls = (props) => {
+  const disabledIngredients = { ...props.burgeriinOrts };
+
+  for (let key in disabledIngredients) {
+    disabledIngredients[key] = disabledIngredients[key] <= 0;
+  }
+
   // control-оос давталт хийгээд buildCongtrol-ийг controls-оос гаргаж ирнэ. ингэхийн тулд controls дотор байгаа зүгээр JS object-уудыг массив байдлаар давтахын тулд property-нуудыг нь массив болгож гаргаж авах шаардлагатай. {Object.keys(controls)}
   return (
     <div className={css.BuildControls}>
@@ -10,20 +18,20 @@ const BuildControls = (props) => {
         Бургерийн үнэ: <strong>{props.price}</strong>
       </p>
 
-      {Object.keys(props.ingredientsNames).map((el) => (
+      {Object.keys(props.ingredientNames).map((el) => (
         <BuildControl
           key={el}
-          disabled={props.disabledIngredients}
+          disabled={disabledIngredients}
           ortsHasah={props.ortsHasah}
           ortsNemeh={props.ortsNemeh}
           type={el}
-          orts={props.ingredientsNames[el]}
+          orts={props.ingredientNames[el]}
         />
       ))}
 
       <button
         onClick={props.showConfirmModal}
-        disabled={props.disabled}
+        disabled={!props.purchasing}
         className={css.OrderButton}
       >
         ЗАХИАЛАХ
@@ -32,14 +40,20 @@ const BuildControls = (props) => {
   );
 };
 
-export default BuildControls;
+const mapStateToProps = (state) => {
+  return {
+    burgeriinOrts: state.ingredients,
+    price: state.totalPrice,
+    purchasing: state.purchasing,
+    ingredientNames: state.ingredientNames,
+  };
+};
 
-// <BuildControl ortsNemeh={props.ortsNemeh} type="salad" orts="Салад" /> гэдэг нь BurgerPage-аас ortsNemeh гэдгийг props-оор нь дамжуулан авч байна гэсэн үг.
+const mapDispatchtoProps = (dispatch) => {
+  return {
+    ortsNemeh: (ortsNer) => dispatch(actions.addIngredient(ortsNer)),
+    ortsHasah: (ortsNer) => dispatch(actions.removeIngredient(ortsNer)),
+  };
+};
 
-/* <BuildControl
-      disabled={props.disabledIngredients}
-      ortsHasah={props.ortsHasah}
-      ortsNemeh={props.ortsNemeh}
-      type="salad"
-      orts="Салад"
-    /> */
+export default connect(mapStateToProps, mapDispatchtoProps)(BuildControls);
