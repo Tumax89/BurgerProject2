@@ -17,13 +17,6 @@ const INGREDIENT_NAMES = {
 
 class BurgerPage extends Component {
   state = {
-    ingredients: {
-      salad: 0,
-      cheese: 0,
-      bacon: 0,
-      meat: 0,
-    },
-    totalPrice: 1000,
     purchasing: false,
     confirmOrder: false,
   };
@@ -37,7 +30,7 @@ class BurgerPage extends Component {
       params.push(orts + "=" + this.props.burgeriinOrts[orts]);
     }
 
-    params.push("dun=" + this.state.totalPrice);
+    params.push("dun=" + this.props.niitUne);
 
     this.props.history.push({
       pathname: "/ship",
@@ -58,7 +51,7 @@ class BurgerPage extends Component {
   ortsNemeh = (type) => {
     const newIngredients = { ...this.props.burgeriinOrts };
     newIngredients[type]++;
-    const newPrice = this.state.totalPrice + INGREDIENT_PRICES[type];
+    const newPrice = this.props.niitUne + INGREDIENT_PRICES[type];
     this.setState({
       purchasing: true,
       totalPrice: newPrice,
@@ -70,7 +63,7 @@ class BurgerPage extends Component {
     if (this.props.burgeriinOrts[type] > 0) {
       const newIngredients = { ...this.props.burgeriinOrts };
       newIngredients[type]--;
-      const newPrice = this.state.totalPrice - INGREDIENT_PRICES[type];
+      const newPrice = this.props.niitUne - INGREDIENT_PRICES[type];
       this.setState({
         purchasing: newPrice > 1000,
         totalPrice: newPrice,
@@ -101,23 +94,22 @@ class BurgerPage extends Component {
             <OrderSummary
               onCancel={this.closeConfirmModal}
               onContinue={this.continueOrder}
-              price={this.state.totalPrice}
+              price={this.props.niitUne}
               ingredientsNames={INGREDIENT_NAMES}
               ingredients={this.props.burgeriinOrts}
             />
           )}
         </Modal>
-
-        <Burger choose={this.props.choose} orts={this.props.burgeriinOrts} />
+        <Burger orts={this.props.burgeriinOrts} />
         <BuildControls
           showConfirmModal={this.showConfirmModal}
           ingredientsNames={INGREDIENT_NAMES}
           disabled={!this.state.purchasing}
-          price={this.state.totalPrice}
+          price={this.props.niitUne}
           disabledIngredients={disabledIngredients}
-          ortsHasah={this.ortsHasah}
-          ortsNemeh={this.ortsNemeh}
-        />
+          ortsHasah={this.props.burgereesOrtsHas}
+          ortsNemeh={this.props.burgertOrtsNem}
+        />{" "}
       </div>
     );
   }
@@ -132,8 +124,10 @@ const a = (state) => {
 
 const b = (dispatch) => {
   return {
-    ortsNem: (ortsNer) => dispatch({ type: "ADD_INGREDIENT" }),
-    ortsHas: (ortsNer) => dispatch({ type: "REMOVE_INGREDIENT" }),
+    burgertOrtsNem: (ortsNer) =>
+      dispatch({ type: "ADD_INGREDIENT", nemehOrts: ortsNer }),
+    burgereesOrtsHas: (ortsNer) =>
+      dispatch({ type: "REMOVE_INGREDIENT", ortsNer }),
   };
 };
 

@@ -34,7 +34,7 @@ const BuildControls = (props) => {
 
 export default BuildControls;
 
-// <BuildControl ortsNemeh={props.ortsNemeh} type="salad" orts="Салад" /> гэдэг нь BurgerBuilder-аас ortsNemeh гэдгийг props-оор нь дамжуулан авч байна гэсэн үг.
+// <BuildControl ortsNemeh={props.ortsNemeh} type="salad" orts="Салад" /> гэдэг нь BurgerPage-аас ortsNemeh гэдгийг props-оор нь дамжуулан авч байна гэсэн үг.
 
 /* <BuildControl
       disabled={props.disabledIngredients}
@@ -42,4 +42,4 @@ export default BuildControls;
       ortsNemeh={props.ortsNemeh}
       type="salad"
       orts="Салад"
-    />
+    /> */
