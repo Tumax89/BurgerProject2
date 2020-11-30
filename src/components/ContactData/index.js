@@ -5,6 +5,7 @@ import Button from "../General/Button";
 import Spinner from "../General/Spinner";
 import axios from "../../axios-orders";
 import { withRouter } from "react-router-dom";
+import * as actions from "../../redux/actions/orderActions";
 
 class ContactData extends React.Component {
   state = {
@@ -27,7 +28,7 @@ class ContactData extends React.Component {
   };
 
   saveOrder = () => {
-    const order = {
+    const newOrder = {
       orts: this.props.ingredients,
       dun: this.props.price,
       hayag: {
@@ -37,19 +38,9 @@ class ContactData extends React.Component {
       },
     };
 
-    this.setState({ loading: true });
-    axios
-      .post("/orders.json", order)
-      .then((response) => {
-        console.log("order amjilttai");
-      })
-      .catch((error) => {
-        console.log("order amjltgui: " + error);
-      })
-      .finally(() => {
-        this.setState({ loading: false });
-        this.props.history.replace("/orders");
-      });
+    this.props.saveOrderAction(newOrder);
+
+    // this.setState({ loading: true });
   };
 
   render() {
@@ -96,4 +87,14 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerReducer.ingredients,
   };
 };
-export default connect(mapStateToProps)(withRouter(ContactData));
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveOrderAction: (newOrder) => dispatch(actions.saveOrder(newOrder)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ContactData));
