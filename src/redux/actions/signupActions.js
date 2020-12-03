@@ -1,24 +1,24 @@
 import axios from "axios";
 
 export const signupUser = (email, password) => {
-  return function (dispatch) {
+  return function(dispatch) {
     dispatch(signupUserStart());
 
     const data = {
       email,
       password,
-      returnSecureToken: true,
+      returnSecureToken: true
     };
 
     axios
       .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAZnrHO4YRt3E15d8jscJZF5j535OxufcQ",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCEmDZW6k2XJlQritKoYeJG14ExYa1rRSM",
         data
       )
-      .then((result) => {
+      .then(result => {
         dispatch(signupUserSuccess(result.data));
       })
-      .catch((err) => {
+      .catch(err => {
         dispatch(signupUserError(err));
       });
   };
@@ -26,20 +26,20 @@ export const signupUser = (email, password) => {
 
 export const signupUserStart = () => {
   return {
-    type: "SIGNUP_USER_START",
+    type: "SIGNUP_USER_START"
   };
 };
 
-export const signupUserSuccess = (firebaseResultData) => {
+export const signupUserSuccess = data => {
   return {
     type: "SIGNUP_USER_SUCCESS",
-    firebaseResultData,
+    data
   };
 };
 
-export const signupUserError = (error) => {
+export const signupUserError = error => {
   return {
     type: "SIGNUP_USER_ERROR",
-    error,
+    error
   };
 };
