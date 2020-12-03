@@ -11,18 +11,18 @@ class Signup extends Component {
     email: "",
     password1: "",
     password2: "",
-    error: "",
+    error: ""
   };
 
-  changeEmail = (e) => {
+  changeEmail = e => {
     this.setState({ email: e.target.value });
   };
 
-  changePassword1 = (e) => {
+  changePassword1 = e => {
     this.setState({ password1: e.target.value });
   };
 
-  changePassword2 = (e) => {
+  changePassword2 = e => {
     this.setState({ password2: e.target.value });
   };
 
@@ -37,7 +37,8 @@ class Signup extends Component {
   render() {
     return (
       <div className={css.Signup}>
-        {this.props.userId && <Redirect to="/orders" />}
+        {this.props.userId && <Redirect to="/" />}
+
         <h1>Бүртгэлийн форм</h1>
         <div>Та өөрийн мэдээллээ оруулна уу</div>
         <input
@@ -71,18 +72,18 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     saving: state.signupReducer.saving,
     firebaseError: state.signupReducer.firebaseError,
-    userId: state.signupReducer.userId,
+    userId: state.signupReducer.userId
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     signupUser: (email, password) =>
-      dispatch(actions.signupUser(email, password)),
+      dispatch(actions.signupUser(email, password))
   };
 };
 
