@@ -5,14 +5,14 @@ import css from "./style.module.css";
 class Login extends Component {
   state = {
     email: "",
-    password: "",
+    password: ""
   };
 
-  changeEmail = (e) => {
+  changeEmail = e => {
     this.setState({ email: e.target.value });
   };
 
-  changePassword = (e) => {
+  changePassword = e => {
     this.setState({ password: e.target.value });
   };
 
@@ -33,7 +33,7 @@ class Login extends Component {
           type="password"
           placeholder="Нууц үг"
         />
-        <Button text="Логин" btnType="Success" daragdsan={this.login} />
+        <Button text="ЛОГИН" btnType="Success" daragdsan={this.login} />
       </div>
     );
   }
